@@ -6,8 +6,11 @@ public class PlayerControls : MonoBehaviour
     public bool splitKeyboardInput = false;
     public int splitKeyPlayerNumber = 1;
 
+    [SerializeField]
     private float playerSpeed = 5.0f;
+    [SerializeField]
     private float jumpHeight = 1.5f;
+    [SerializeField]
     private float gravityValue = -9.81f;
 
     public CharacterController controller;
