@@ -14,11 +14,13 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] LayerMask playerLayer;
     [SerializeField] LayerMask lootLayer;
     [SerializeField]Vector3 detectArea;
+    [SerializeField] Vector3 detectScale;
     [SerializeField]Collider[] collidersOnPlate;
 
     private void Start()
     {
         detectArea = new Vector3(transform.position.x, transform.position.y + detectOffset, transform.position.z); //sets zone for detecting weight.
+        detectScale = new Vector3(transform.localScale.x, transform.localScale.y + 5, transform.localScale.z); //sets zone for detecting weight.
     }
 
     // method called by mechanism this is locked by.
@@ -37,7 +39,7 @@ public class PressurePlate : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // upon any collider entering the pressure plate's trigger zone, begins checking what's making contact with plate floor.
-        collidersOnPlate = Physics.OverlapBox(detectArea, transform.localScale, Quaternion.identity, playerLayer | lootLayer); // stores an array of ALL objects WITH the Player and Loot layer. This is my solution to be able to count them all
+        collidersOnPlate = Physics.OverlapBox(detectArea, detectScale, Quaternion.identity, playerLayer | lootLayer); // stores an array of ALL objects WITH the Player and Loot layer. This is my solution to be able to count them all
         //Debug.Log(collidersOnPlate.Length); // commented out but not removed cuz i need this every so often lol.
         if(collidersOnPlate.Length > 0)
         {
@@ -64,7 +66,7 @@ public class PressurePlate : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Animator animator = GetComponent<Animator>();
+        Animator animator = GetComponentInParent<Animator>();
         // I set up the animator to run based on Descend Stage. 0 is fully unnaffected, 1 is 1/3rd down, 2 is 2/3rd down, and 3 is fully down.
 
         if(totalWeightOnPlate >= activationWeight) // if at or over activation weight, 
@@ -99,6 +101,6 @@ public class PressurePlate : MonoBehaviour
         else
             Gizmos.color = Color.red;
 
-        Gizmos.DrawWireCube(detectArea, transform.localScale);
+        Gizmos.DrawWireCube(detectArea, detectScale);
     }
 }
