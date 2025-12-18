@@ -9,8 +9,8 @@ public class PlayerJoiner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerOne.SwitchCurrentControlScheme("Keyboard 1", Keyboard.current);
-        playerTwo.SwitchCurrentControlScheme("Keyboard 2", Keyboard.current);
+        playerOne.SwitchCurrentControlScheme("KeyboardLeft", Keyboard.current);
+        playerTwo.SwitchCurrentControlScheme("KeyboardRight", Keyboard.current);
         
     }
 
