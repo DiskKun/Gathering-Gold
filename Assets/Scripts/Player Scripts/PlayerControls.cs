@@ -20,6 +20,9 @@ public class PlayerControls : MonoBehaviour
     [Header("Input Actions")]
     public InputActionReference moveAction;
     public InputActionReference jumpAction;
+    public InputActionReference pickupAction;
+
+    Rigidbody heldItemRB;
 
     private void OnEnable()
     {
@@ -130,5 +133,13 @@ public class PlayerControls : MonoBehaviour
         // Move
         Vector3 finalMove = move * playerSpeed + Vector3.up * playerVelocity.y;
         controller.Move(finalMove * Time.deltaTime);
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Pickup")
+        {
+            
+        }
     }
 }
