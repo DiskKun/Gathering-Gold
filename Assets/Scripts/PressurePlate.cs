@@ -26,6 +26,9 @@ public class PressurePlate : MonoBehaviour
     // method called by mechanism this is locked by.
     public bool CheckPlateActive()
     {
+        if (collidersOnPlate.Length < 1)
+            totalWeightOnPlate = 0f; // resets balance to 0 if there aren't any objects inside.
+
         if (totalWeightOnPlate >= activationWeight)
         {
             plateActivated = true;
@@ -36,7 +39,7 @@ public class PressurePlate : MonoBehaviour
     }
 
     // so it doesn't calculate when not needed, collider check only works while objects are on it's trigger zone.
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         // upon any collider entering the pressure plate's trigger zone, begins checking what's making contact with plate floor.
         collidersOnPlate = Physics.OverlapBox(detectArea, detectScale, Quaternion.identity, playerLayer | lootLayer); // stores an array of ALL objects WITH the Player and Loot layer. This is my solution to be able to count them all
@@ -51,19 +54,18 @@ public class PressurePlate : MonoBehaviour
     {
         totalWeightOnPlate = 0f; // resets total for new calculation.
 
+        if (collidersOnPlate.Length < 1) // if nothing in detection area, stop running this function.
+            return;
+
         foreach(Collider collider in collidersOnPlate)
         {
             CarryWeight CarryWeight = collider.gameObject.GetComponent<CarryWeight>(); // finds and gets carry weight script of incoming object. only objects with the CarryWeight script will do things.
-            totalWeightOnPlate += CarryWeight.playerWeight/2; // adds weight to variable. (compounds for each object). !Need to /2 because character controllers have their own colliders and i dont wanna touch the player config.
+            totalWeightOnPlate += CarryWeight.objectWeight; // adds weight to variable. (compounds for each object). Players count twice because character controllers have their own colliders and i dont wanna touch the player config.
             
         }
         Debug.Log("This weight on plate: " + totalWeightOnPlate);
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        totalWeightOnPlate = 0f; // resets balance to 0
-    }
     private void FixedUpdate()
     {
         Animator animator = GetComponentInParent<Animator>();
