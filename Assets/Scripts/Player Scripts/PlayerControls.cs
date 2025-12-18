@@ -187,9 +187,13 @@ public class PlayerControls : MonoBehaviour
     {
         if (heldItemRB != null)
         {
+            jumpHeight = 0.75f;
             heldItemRB.MovePosition(transform.position + Vector3.up * 2);
             heldItemRB.MoveRotation(Quaternion.identity);
             heldItemRB.linearVelocity = Vector3.zero;
+        } else
+        {
+            jumpHeight = 1.5f;
         }
     }
 
