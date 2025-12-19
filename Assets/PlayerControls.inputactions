@@ -23,6 +23,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pickup",
+                    "type": "Button",
+                    "id": "52ceb6c4-af0c-4b92-99b1-db7db6b213f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -32,7 +41,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard 1",
+                    "groups": "KeyboardRight",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -43,7 +52,7 @@
                     "path": "<Keyboard>/rightShift",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard 2",
+                    "groups": "KeyboardLeft",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -65,7 +74,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard 1",
+                    "groups": "KeyboardRight",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -76,7 +85,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard 1",
+                    "groups": "KeyboardRight",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -87,7 +96,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard 1",
+                    "groups": "KeyboardRight",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -98,7 +107,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard 1",
+                    "groups": "KeyboardRight",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -120,7 +129,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard 2",
+                    "groups": "KeyboardLeft",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -131,7 +140,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard 2",
+                    "groups": "KeyboardLeft",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -142,7 +151,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard 2",
+                    "groups": "KeyboardLeft",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -153,18 +162,40 @@
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard 2",
+                    "groups": "KeyboardLeft",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "53be7ca6-ad4d-44ef-9b1f-01712275b51f",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardLeft",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "998e9ad7-6748-44e5-9c2d-e9096de1144a",
+                    "path": "<Keyboard>/slash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardRight",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
     ],
     "controlSchemes": [
         {
-            "name": "Keyboard 2",
-            "bindingGroup": "Keyboard 2",
+            "name": "KeyboardLeft",
+            "bindingGroup": "KeyboardLeft",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
@@ -174,8 +205,8 @@
             ]
         },
         {
-            "name": "Keyboard 1",
-            "bindingGroup": "Keyboard 1",
+            "name": "KeyboardRight",
+            "bindingGroup": "KeyboardRight",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",

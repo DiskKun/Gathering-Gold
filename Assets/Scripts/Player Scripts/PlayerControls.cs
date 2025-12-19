@@ -22,7 +22,8 @@ public class PlayerControls : MonoBehaviour
     public InputActionReference jumpAction;
     public InputActionReference pickupAction;
 
-    Rigidbody heldItemRB;
+    public Rigidbody heldItemQueue;
+    public Rigidbody heldItemRB;
 
     private void OnEnable()
     {
@@ -36,62 +37,96 @@ public class PlayerControls : MonoBehaviour
         jumpAction.action.Disable();
     }
 
-    Vector2 SplitKeyDirectionInput()
+    Vector2 DirectionInput()
     {
         Vector2 direction = Vector2.zero;
-        if (splitKeyPlayerNumber == 1)
+        if (splitKeyboardInput)
         {
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (splitKeyPlayerNumber == 1)
             {
-                direction.y = 1;
+                if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    direction.y = 1;
+                }
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    direction.y = -1;
+                }
+                if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    direction.x = -1;
+                }
+                if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    direction.x = 1;
+                }
             }
-            if (Input.GetKey(KeyCode.DownArrow))
+            else
             {
-                direction.y = -1;
+                if (Input.GetKey(KeyCode.W))
+                {
+                    direction.y = 1;
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    direction.y = -1;
+                }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    direction.x = -1;
+                }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    direction.x = 1;
+                }
             }
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                direction.x = -1;
-            }
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                direction.x = 1;
-            }
-        }
-        else
+            direction = direction.normalized;
+        } else
         {
-            if (Input.GetKey(KeyCode.W))
-            {
-                direction.y = 1;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                direction.y = -1;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                direction.x = -1;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                direction.x = 1;
-            }
+            direction = moveAction.action.ReadValue<Vector2>();
         }
-        
-        direction = direction.normalized;
+
+
         return direction;
 
     }
 
-    bool SplitKeyJumpInput()
+    bool JumpInput()
     {
-        if (splitKeyPlayerNumber == 1)
+        if (splitKeyboardInput)
         {
-            return Input.GetKeyDown(KeyCode.RightShift);
+            if (splitKeyPlayerNumber == 1)
+            {
+                return Input.GetKeyDown(KeyCode.RightShift);
+            }
+            else
+            {
+                return Input.GetKeyDown(KeyCode.Space);
+            }
         } else
         {
-            return Input.GetKeyDown(KeyCode.Space);
+            return jumpAction.action.WasPressedThisFrame();
         }
+        
+    }
+
+    bool PickupInput()
+    {
+        if (splitKeyboardInput)
+        {
+            if (splitKeyPlayerNumber == 1)
+            {
+                return Input.GetKeyDown(KeyCode.Slash);
+            }
+            else
+            {
+                return Input.GetKeyDown(KeyCode.LeftShift);
+            }
+        } else
+        {
+            return pickupAction.action.WasPressedThisFrame();
+        }
+        
     }
 
 
@@ -110,11 +145,8 @@ public class PlayerControls : MonoBehaviour
         }
 
         // Read input
-        Vector2 input = moveAction.action.ReadValue<Vector2>();
-        if (splitKeyboardInput)
-        {
-            input = SplitKeyDirectionInput();
-        }
+        Vector2 input = DirectionInput();
+        
         Vector3 move = new Vector3(input.x, 0, input.y);
         move = Vector3.ClampMagnitude(move, 1f);
 
@@ -122,7 +154,7 @@ public class PlayerControls : MonoBehaviour
             transform.forward = move;
 
         // Jump using WasPressedThisFrame()
-        if (groundedPlayer && (!splitKeyboardInput && jumpAction.action.WasPressedThisFrame() || (splitKeyboardInput && SplitKeyJumpInput())))
+        if (groundedPlayer && JumpInput())
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravityValue);
         }
@@ -133,13 +165,37 @@ public class PlayerControls : MonoBehaviour
         // Move
         Vector3 finalMove = move * playerSpeed + Vector3.up * playerVelocity.y;
         controller.Move(finalMove * Time.deltaTime);
+
+
+        // pickup
+        if (PickupInput())
+        {
+            if (heldItemQueue)
+            {
+                heldItemRB = heldItemQueue;
+                heldItemQueue = null;
+            } else
+            {
+                heldItemRB = null;
+            }
+        }
+        
+        
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void FixedUpdate()
     {
-        if (collision.gameObject.tag == "Pickup")
+        if (heldItemRB != null)
         {
-            
+            jumpHeight = 0.75f;
+            heldItemRB.MovePosition(transform.position + Vector3.up * 2);
+            heldItemRB.MoveRotation(Quaternion.identity);
+            heldItemRB.linearVelocity = Vector3.zero;
+        } else
+        {
+            jumpHeight = 1.5f;
         }
     }
+
+
 }
