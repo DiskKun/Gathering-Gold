@@ -31490,6 +31490,8 @@ MonoBehaviour:
   moveAction: {fileID: 1328159466}
   jumpAction: {fileID: 1399888434}
   pickupAction: {fileID: 0}
+  heldItemQueue: {fileID: 0}
+  heldItemRB: {fileID: 0}
 --- !u!1 &314753351
 GameObject:
   m_ObjectHideFlags: 0
@@ -43205,6 +43207,8 @@ MonoBehaviour:
   moveAction: {fileID: 1737009720}
   jumpAction: {fileID: 129858572}
   pickupAction: {fileID: 0}
+  heldItemQueue: {fileID: 0}
+  heldItemRB: {fileID: 0}
 --- !u!1 &820987694
 GameObject:
   m_ObjectHideFlags: 0
@@ -60700,7 +60704,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 57.930332
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -60727,7 +60731,7 @@ Transform:
   m_GameObject: {fileID: 957442388}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3826835, y: 0.0000000051772884, z: -0.000000002144503, w: 0.92387956}
-  m_LocalPosition: {x: 46.21563, y: 25, z: 16.907587}
+  m_LocalPosition: {x: 46.344772, y: 21.448654, z: 20.331066}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -129535,13 +129539,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1705131404}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4eb4843bae7d24943842ea23130dcd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FramingMode: 2
-  FramingSize: 0.8
+  FramingSize: 0.5
   CenterOffset: {x: 0, y: 0}
   Damping: 2
   SizeAdjustment: 2
