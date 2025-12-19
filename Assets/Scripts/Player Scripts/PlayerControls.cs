@@ -186,7 +186,7 @@ public class PlayerControls : MonoBehaviour
         if (heldItemRB != null)
         {
              // halve the player's jumphight if something is held
-            heldItemRB.MovePosition(transform.position + Vector3.up * 2); // hold the item above the player's head
+            heldItemRB.MovePosition(transform.position + Vector3.up * heldItemRB.gameObject.transform.localScale.magnitude * 0.75f); // hold the item above the player's head
             heldItemRB.MoveRotation(Quaternion.identity);
             heldItemRB.linearVelocity = Vector3.zero; // ensure it is not affected by gravity while being held
         }
