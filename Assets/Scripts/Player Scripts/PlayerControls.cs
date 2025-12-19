@@ -3,7 +3,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
+    [Tooltip("Set this value to true when playing split keyboard.")]
     public bool splitKeyboardInput = false;
+    [Tooltip("Ensure 1 of the 2 players' Player Number is set to 1.")]
     public int splitKeyPlayerNumber = 1;
 
     [SerializeField]
@@ -22,8 +24,8 @@ public class PlayerControls : MonoBehaviour
     public InputActionReference jumpAction;
     public InputActionReference pickupAction;
 
-    public Rigidbody heldItemQueue;
-    public Rigidbody heldItemRB;
+    public Rigidbody heldItemQueue; // The queue holds whatever item the player is inside the PickupArea of
+    public Rigidbody heldItemRB; // When the player presses the Pickup button, the Queue item gets transferred here.
 
     private void OnEnable()
     {
@@ -40,7 +42,7 @@ public class PlayerControls : MonoBehaviour
     Vector2 DirectionInput()
     {
         Vector2 direction = Vector2.zero;
-        if (splitKeyboardInput)
+        if (splitKeyboardInput) // horrible code that is unfortunately necessary for split keyboard controls
         {
             if (splitKeyPlayerNumber == 1)
             {
@@ -80,7 +82,6 @@ public class PlayerControls : MonoBehaviour
                     direction.x = 1;
                 }
             }
-            direction = direction.normalized;
         } else
         {
             direction = moveAction.action.ReadValue<Vector2>();
@@ -132,9 +133,6 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-
-        
-
         groundedPlayer = controller.isGrounded;
 
         if (groundedPlayer)
@@ -172,28 +170,25 @@ public class PlayerControls : MonoBehaviour
         {
             if (heldItemQueue)
             {
-                heldItemRB = heldItemQueue;
-                heldItemQueue = null;
+                heldItemRB = heldItemQueue; // if there's an item in the queue, transfer it to the heldItemRB.
+                heldItemQueue = null; // clear the queue
+                jumpHeight = 0.75f; // halve the player's jumpheight
             } else
             {
-                heldItemRB = null;
+                heldItemRB = null; // drop the item if nothing in queue
+                jumpHeight = 1.5f; // reset the player's jump height to normal
             }
         }
-        
-        
     }
 
     private void FixedUpdate()
     {
         if (heldItemRB != null)
         {
-            jumpHeight = 0.75f;
-            heldItemRB.MovePosition(transform.position + Vector3.up * 2);
+             // halve the player's jumphight if something is held
+            heldItemRB.MovePosition(transform.position + Vector3.up * 2); // hold the item above the player's head
             heldItemRB.MoveRotation(Quaternion.identity);
-            heldItemRB.linearVelocity = Vector3.zero;
-        } else
-        {
-            jumpHeight = 1.5f;
+            heldItemRB.linearVelocity = Vector3.zero; // ensure it is not affected by gravity while being held
         }
     }
 

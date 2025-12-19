@@ -8,7 +8,7 @@ public class PickupArea : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<PlayerControls>().heldItemQueue = rb;
+            other.GetComponent<PlayerControls>().heldItemQueue = rb; // Queue this item for being picked up by the player
         }
     }
     private void OnTriggerExit(Collider other)
