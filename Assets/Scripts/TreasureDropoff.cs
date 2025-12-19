@@ -16,6 +16,9 @@ public class TreasureDropoff : MonoBehaviour
     [SerializeField]
     [Tooltip("Speed at which the cart will drive away")]
     float driveSpeed;
+    [SerializeField]
+    [Tooltip("Scene reference to the single item required to complete the level. Ignores TreasureThreshold if set.")]
+    GameObject requiredItem;
 
     int treasureInArea = 0; // the # of treasures currently detected in the area
     int playersInArea = 0; // the # of players currently detected in the area
@@ -48,19 +51,37 @@ public class TreasureDropoff : MonoBehaviour
         // check to see if the drive conditions are met, if so, run the TreasureSendoff method
         if (!drive)
         {
+
+
             if (requirePlayersInArea)
             {
-                if (playersInArea == 2 && treasureInArea == treasureThreshold)
+                if (requiredItem)
+                {
+                    if (objectsInDropoff.Contains(requiredItem) && playersInArea == 2)
+                    {
+                        TreasureSendoff();
+                    }
+                } else if (playersInArea == 2 && treasureInArea == treasureThreshold)
                 {
                     TreasureSendoff();
                 }
-            } else
+            }
+            else
             {
+                if (requiredItem)
+                {
+                    if (objectsInDropoff.Contains(requiredItem))
+                    {
+                        TreasureSendoff();
+                    }
+                }
                 if (treasureInArea == treasureThreshold)
                 {
                     TreasureSendoff();
                 }
             }
+
+
         }
 
     }
@@ -96,7 +117,7 @@ public class TreasureDropoff : MonoBehaviour
     {
         cameraManager.camIndex = 1; // switch the camera to the cart cam
         StartCoroutine(Drive());
-        
+
     }
 
     IEnumerator Drive()
@@ -116,5 +137,5 @@ public class TreasureDropoff : MonoBehaviour
         }
         drive = true; // start driving
     }
-    
+
 }
