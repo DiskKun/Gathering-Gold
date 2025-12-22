@@ -117,11 +117,11 @@ public class PlayerControls : MonoBehaviour
         {
             if (splitKeyPlayerNumber == 1)
             {
-                return Input.GetKeyDown(KeyCode.Slash);
+                return Input.GetKeyDown(KeyCode.LeftShift);
             }
             else
             {
-                return Input.GetKeyDown(KeyCode.LeftShift);
+                return Input.GetKeyDown(KeyCode.Slash);
             }
         } else
         {
