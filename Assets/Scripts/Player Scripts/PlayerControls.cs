@@ -39,7 +39,7 @@ public class PlayerControls : MonoBehaviour
         jumpAction.action.Disable();
     }
 
-    Vector2 DirectionInput()
+    Vector2 DirectionInput() // all code for getting walking input
     {
         Vector2 direction = Vector2.zero;
         if (splitKeyboardInput) // horrible code that is unfortunately necessary for split keyboard controls
@@ -92,7 +92,7 @@ public class PlayerControls : MonoBehaviour
 
     }
 
-    bool JumpInput()
+    bool JumpInput() // all code for getting jump input
     {
         if (splitKeyboardInput)
         {
@@ -111,7 +111,7 @@ public class PlayerControls : MonoBehaviour
         
     }
 
-    bool PickupInput()
+    bool PickupInput() // all code for getting pickup input
     {
         if (splitKeyboardInput)
         {
