@@ -1,10 +1,20 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.UIElements;
 
 public class Door : MonoBehaviour
 {
     [SerializeField]PressurePlate unlockingPlate;
     [SerializeField] PressurePlate unlockingPlateRamp2;
+    
+    //[SerializeField] Vector3 basePosition;
+    [SerializeField] Vector3 baseRotation;
+    //[SerializeField] Vector3 rampPosition;
+    [SerializeField] Vector3 rampRotation;
+    [SerializeField] float lerpDuration = 3;
+    [SerializeField] bool rampDown = false;
+    [SerializeField] bool OverrideIsOpen;
+
 
     [SerializeField]bool isOpen = false;
   
@@ -17,13 +27,15 @@ public class Door : MonoBehaviour
     [SerializeField] DoorTypes doorTypes;
 
     
-    Transform pivotPoint;
+    [SerializeField]Transform pivotPoint;
 
 
     
     private void Start()
     {
-        pivotPoint = GetComponentInParent<Transform>();
+        //pivotPoint = transform.parent.GetComponent<Transform>(); // broken rn. wont fidn transform in parent object. did a bypass
+        rampDown = false;
+        baseRotation = transform.parent.localEulerAngles;
     }
     private void Update()
     {
@@ -39,31 +51,63 @@ public class Door : MonoBehaviour
                 if (isOpen)
                 {
 
-                    pivotPoint.eulerAngles = new Vector3(0, -90, 0);
+                    transform.parent.eulerAngles = new Vector3(0, -90, 0);
                 }
                 else
                 {
-                    pivotPoint.eulerAngles = new Vector3(0, 0, 0);
+                    transform.parent.eulerAngles = new Vector3(0, 0, 0);
                 }
                 break;
             case DoorTypes.ramp:
-                if (unlockingPlateRamp2.CheckPlateActive() && unlockingPlate.CheckPlateActive())
+                if ((unlockingPlateRamp2.CheckPlateActive() && unlockingPlate.CheckPlateActive()) | OverrideIsOpen)
                 {
                     isOpen = true;
                 }
+                else
+                    isOpen= false;
                 if (isOpen)
                 {
+                    StartCoroutine("LerpRamp");
 
-                    pivotPoint.eulerAngles += new Vector3(-137.619f, 77.944f, -37.21301f);
-                 
                 }
                 else
                 {
-                    pivotPoint.eulerAngles = new Vector3(0, 0, 0);
+                    if(rampDown)
+                        StartCoroutine("LerpRampUp");
                 }
                 break;
 
         }
     }
-    
+    IEnumerator LerpRamp()
+    {
+        float timeElapsed = 0;
+
+        while (timeElapsed < lerpDuration)
+        {
+            transform.parent.eulerAngles = Vector3.Lerp(baseRotation, rampRotation, timeElapsed / lerpDuration);
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        transform.parent.eulerAngles = rampRotation;
+        rampDown = true;
+    }
+    IEnumerator LerpRampUp()
+    {
+        float timeElapsed = 0;
+
+        while (timeElapsed < lerpDuration)
+        {
+            transform.parent.eulerAngles = Vector3.Lerp(rampRotation, baseRotation, timeElapsed / lerpDuration);
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        transform.parent.eulerAngles = baseRotation;
+        rampDown = false;
+    }
+
 }
