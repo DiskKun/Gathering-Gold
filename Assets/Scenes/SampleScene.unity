@@ -8088,7 +8088,7 @@ GameObject:
   - component: {fileID: 2109576048}
   - component: {fileID: 2109576047}
   m_Layer: 0
-  m_Name: ExclamationMark
+  m_Name: AlertIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
