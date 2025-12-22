@@ -19,8 +19,8 @@ public class PressurePlate : MonoBehaviour
 
     private void Start()
     {
-        detectArea = new Vector3(transform.position.x, transform.position.y + detectOffset, transform.position.z); //sets zone for detecting weight.
-        detectScale = new Vector3(transform.localScale.x, transform.localScale.y + 5, transform.localScale.z); //sets zone for detecting weight.
+        detectArea = new Vector3(transform.position.x, transform.position.y + detectOffset + transform.localScale.y, transform.position.z); //sets zone for detecting weight.
+        detectScale = new Vector3(transform.localScale.x, transform.localScale.y + 3, transform.localScale.z); //sets zone for detecting weight.
     }
 
     // method called by mechanism this is locked by.
@@ -38,16 +38,24 @@ public class PressurePlate : MonoBehaviour
         return false;
     }
 
-    // so it doesn't calculate when not needed, collider check only works while objects are on it's trigger zone.
     private void OnTriggerStay(Collider other)
     {
         // upon any collider entering the pressure plate's trigger zone, begins checking what's making contact with plate floor.
         collidersOnPlate = Physics.OverlapBox(detectArea, detectScale, Quaternion.identity, playerLayer | lootLayer); // stores an array of ALL objects WITH the Player and Loot layer. This is my solution to be able to count them all
         //Debug.Log(collidersOnPlate.Length); // commented out but not removed cuz i need this every so often lol.
-        if(collidersOnPlate.Length > 0)
+        if (collidersOnPlate.Length > 0)
         {
             CalculateTotalMass();
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.includeLayers == playerLayer) // if on tigger exit the thing exiting is the player
+        {
+            CalculateTotalMass(); // do a weight calc
+        }
+        // this is so that loot boxes left are still part of the calc
     }
 
     void CalculateTotalMass()

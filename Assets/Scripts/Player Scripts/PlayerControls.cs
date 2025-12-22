@@ -82,7 +82,8 @@ public class PlayerControls : MonoBehaviour
                     direction.x = 1;
                 }
             }
-        } else
+        }
+        else
         {
             direction = moveAction.action.ReadValue<Vector2>();
         }
@@ -104,11 +105,12 @@ public class PlayerControls : MonoBehaviour
             {
                 return Input.GetKeyDown(KeyCode.Space);
             }
-        } else
+        }
+        else
         {
             return jumpAction.action.WasPressedThisFrame();
         }
-        
+
     }
 
     bool PickupInput() // all code for getting pickup input
@@ -123,11 +125,12 @@ public class PlayerControls : MonoBehaviour
             {
                 return Input.GetKeyDown(KeyCode.LeftShift);
             }
-        } else
+        }
+        else
         {
             return pickupAction.action.WasPressedThisFrame();
         }
-        
+
     }
 
 
@@ -144,7 +147,7 @@ public class PlayerControls : MonoBehaviour
 
         // Read input
         Vector2 input = DirectionInput();
-        
+
         Vector3 move = new Vector3(input.x, 0, input.y);
         move = Vector3.ClampMagnitude(move, 1f);
 
@@ -173,7 +176,8 @@ public class PlayerControls : MonoBehaviour
                 heldItemRB = heldItemQueue; // if there's an item in the queue, transfer it to the heldItemRB.
                 heldItemQueue = null; // clear the queue
                 jumpHeight = 0.75f; // halve the player's jumpheight
-            } else
+            }
+            else
             {
                 heldItemRB = null; // drop the item if nothing in queue
                 jumpHeight = 1.5f; // reset the player's jump height to normal
@@ -185,7 +189,7 @@ public class PlayerControls : MonoBehaviour
     {
         if (heldItemRB != null)
         {
-             // halve the player's jumphight if something is held
+            // halve the player's jumphight if something is held
             heldItemRB.MovePosition(transform.position + Vector3.up * heldItemRB.gameObject.transform.localScale.magnitude * 0.75f); // hold the item above the player's head
             heldItemRB.MoveRotation(Quaternion.identity);
             heldItemRB.linearVelocity = Vector3.zero; // ensure it is not affected by gravity while being held
