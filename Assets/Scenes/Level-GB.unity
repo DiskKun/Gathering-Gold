@@ -59483,7 +59483,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 59.8913
+  field of view: 59.846905
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -59510,7 +59510,7 @@ Transform:
   m_GameObject: {fileID: 957442388}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3826835, y: 0.0000000051772884, z: -0.000000002144503, w: 0.92387956}
-  m_LocalPosition: {x: 8.012864, y: 15.835886, z: 11.774251}
+  m_LocalPosition: {x: 8.015653, y: 14.352101, z: 13.259737}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -129077,8 +129077,38 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ac94f9d90e68add4296fd4ab5483911a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1876005130}
   m_SourcePrefab: {fileID: 100100000, guid: ac94f9d90e68add4296fd4ab5483911a, type: 3}
+--- !u!1 &1876005129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ac94f9d90e68add4296fd4ab5483911a, type: 3}
+  m_PrefabInstance: {fileID: 1876005128}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1876005130
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876005129}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: ac94f9d90e68add4296fd4ab5483911a, type: 3}
 --- !u!43 &1880939920
 Mesh:
   m_ObjectHideFlags: 0
