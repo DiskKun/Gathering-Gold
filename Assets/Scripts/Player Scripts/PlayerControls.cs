@@ -27,6 +27,11 @@ public class PlayerControls : MonoBehaviour
     public Rigidbody heldItemQueue; // The queue holds whatever item the player is inside the PickupArea of
     public Rigidbody heldItemRB; // When the player presses the Pickup button, the Queue item gets transferred here.
 
+    public Rigidbody heldHeavyItemQueue; // When player is waiting for other player to carry item. Can't move in this state.
+    public Rigidbody heldHeavyItemRB; // When player is waiting for other player to carry item. Can't move in this state.
+    public Vector3 playerMidpoint; // so that heavy items are held between them. the position where heavy items will be.
+    public bool dropForBothPlayers = false; // communicates Pickup Area script to drop the item for both players.
+
     private void OnEnable()
     {
         moveAction.action.Enable();
@@ -171,6 +176,20 @@ public class PlayerControls : MonoBehaviour
         // pickup
         if (PickupInput())
         {
+            if (heldHeavyItemQueue)
+            {
+                Debug.Log("heavy item q");
+                heldHeavyItemRB = heldHeavyItemQueue; // if there's an item in the queue, transfer it to the heldItemRB.
+                heldHeavyItemQueue = null; // clear the queue
+                jumpHeight = 0.25f; // quarters the player's jumpheight
+            }
+            else if(heldHeavyItemRB)
+            {
+                heldHeavyItemRB = null; // drop the item if nothing in queue
+                dropForBothPlayers = true;
+                jumpHeight = 1.5f; // reset the player's jump height to normal
+            }
+
             if (heldItemQueue)
             {
                 heldItemRB = heldItemQueue; // if there's an item in the queue, transfer it to the heldItemRB.
@@ -194,7 +213,13 @@ public class PlayerControls : MonoBehaviour
             heldItemRB.MoveRotation(Quaternion.identity);
             heldItemRB.linearVelocity = Vector3.zero; // ensure it is not affected by gravity while being held
         }
+        if (heldHeavyItemRB != null)
+        {
+            heldHeavyItemRB.MovePosition(playerMidpoint);
+            heldHeavyItemRB.MoveRotation(Quaternion.identity);
+            heldHeavyItemRB.linearVelocity = Vector3.zero; // ensure it is not affected by gravity while being held
+        }
     }
 
-
+    
 }
