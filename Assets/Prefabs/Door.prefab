@@ -170,8 +170,8 @@ Transform:
   m_GameObject: {fileID: 6271705544435430432}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.47200012, y: 0.086000085, z: 0.069999814}
-  m_LocalScale: {x: 1.2552977, y: 2.322199, z: 0.078242056}
+  m_LocalPosition: {x: -0.47200012, y: 0.086000085, z: 0.06999989}
+  m_LocalScale: {x: 1.2552971, y: 2.322199, z: 0.078242056}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1756365536463614132}
@@ -274,3 +274,5 @@ MonoBehaviour:
   isOpen: 0
   doorTypes: 0
   pivotPoint: {fileID: 0}
+  sound: 0
+  volume: 1
