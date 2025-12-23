@@ -11,17 +11,20 @@ public class Door : MonoBehaviour
     [SerializeField] Vector3 baseRotation;
     //[SerializeField] Vector3 rampPosition;
     [SerializeField] Vector3 rampRotation;
+    [SerializeField] Vector2 grandDoorRotation;
+    [SerializeField] Vector3 grandDoorBaseRotation;
     [SerializeField] float lerpDuration = 3;
     [SerializeField] bool rampDown = false;
     [SerializeField] bool OverrideIsOpen;
-
-
+    Vector3 basePosition;
+    Vector3 currentPosition; 
     [SerializeField]bool isOpen = false;
   
     enum DoorTypes
     {
      door = 1,
-     ramp = 2
+     ramp = 2,
+     granddoor =3
     }
 
     [SerializeField] DoorTypes doorTypes;
@@ -36,6 +39,8 @@ public class Door : MonoBehaviour
         //pivotPoint = transform.parent.GetComponent<Transform>(); // broken rn. wont fidn transform in parent object. did a bypass
         rampDown = false;
         baseRotation = transform.parent.localEulerAngles;
+        basePosition = transform.parent.position;
+        grandDoorBaseRotation = transform.parent.localEulerAngles;  
     }
     private void Update()
     {
@@ -51,11 +56,12 @@ public class Door : MonoBehaviour
                 if (isOpen)
                 {
 
-                    transform.parent.eulerAngles = new Vector3(0, -90, 0);
+                    transform.parent.position += new Vector3(0,-10, 0) *Time.deltaTime;
+                   currentPosition = transform.parent.position;
                 }
                 else
                 {
-                    transform.parent.eulerAngles = new Vector3(0, 0, 0);
+                    transform.parent.position = basePosition;
                 }
                 break;
             case DoorTypes.ramp:
@@ -72,12 +78,33 @@ public class Door : MonoBehaviour
                 }
                 else
                 {
-                    if(rampDown)
-                        StartCoroutine("LerpRampUp");
+                 //   if(rampDown)
+                  //      StartCoroutine("LerpRampUp");
                 }
+                break;
+            case DoorTypes.granddoor:
+                if((unlockingPlate.CheckPlateActive() && unlockingPlateRamp2.CheckPlateActive()) || OverrideIsOpen)
+                {
+                    StartCoroutine(LerpGrandDoor());
+                }
+
                 break;
 
         }
+    }
+    IEnumerator LerpGrandDoor()
+    {
+        float timeElapsed = 0;
+
+        while (timeElapsed < lerpDuration)
+        {
+            transform.parent.eulerAngles = Vector3.Lerp(grandDoorBaseRotation, grandDoorRotation, timeElapsed / lerpDuration);
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        transform.parent.eulerAngles = grandDoorRotation;
     }
     IEnumerator LerpRamp()
     {
