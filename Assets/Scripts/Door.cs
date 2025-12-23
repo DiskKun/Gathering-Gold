@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
+using Unity.VisualScripting;
+using UnityEngine.Rendering;
 
 public class Door : MonoBehaviour
 {
@@ -32,8 +34,11 @@ public class Door : MonoBehaviour
     
     [SerializeField]Transform pivotPoint;
 
+    // stuff for sfx
+    [SerializeField] private SoundType sound;
+    [SerializeField, Range(0, 1)] private float volume = 1;
+    private bool rampSound = false;
 
-    
     private void Start()
     {
         //pivotPoint = transform.parent.GetComponent<Transform>(); // broken rn. wont fidn transform in parent object. did a bypass
@@ -91,6 +96,13 @@ public class Door : MonoBehaviour
                 break;
 
         }
+
+        if (rampSound == true)
+        {
+            // play sfx
+            SoundManager.PlaySound(sound, volume);
+            rampSound = false;
+        }
     }
     IEnumerator LerpGrandDoor()
     {
@@ -120,6 +132,7 @@ public class Door : MonoBehaviour
 
         transform.parent.eulerAngles = rampRotation;
         rampDown = true;
+        rampSound = true;
     }
     IEnumerator LerpRampUp()
     {
