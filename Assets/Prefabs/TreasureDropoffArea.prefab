@@ -724,3 +724,4 @@ MonoBehaviour:
   treasureThreshold: 2
   driveSpeed: 10
   requiredItem: {fileID: 0}
+  drive: 0
