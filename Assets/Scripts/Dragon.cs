@@ -24,13 +24,7 @@ public class Dragon : MonoBehaviour
     float secondsInZone = 0;
 
     int playersInArea;
-    bool asleep = true;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public bool asleep = true;
 
     // Update is called once per frame
     void Update()

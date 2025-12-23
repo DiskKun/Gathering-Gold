@@ -22,7 +22,7 @@ public class TreasureDropoff : MonoBehaviour
 
     int treasureInArea = 0; // the # of treasures currently detected in the area
     int playersInArea = 0; // the # of players currently detected in the area
-    bool drive = false; // whether or not the cart is driving
+    public bool drive = false; // whether or not the cart is driving
     Transform visuals; // the empty gameobject that all cart visuals should be under
     List<GameObject> objectsInDropoff = new List<GameObject>(); // list of objects currently being detected in the area
     List<GameObject> driveObjects = new List<GameObject>(); // list of objects to drive away with - can't change once the cart starts driving

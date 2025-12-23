@@ -8,11 +8,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 42dc73d5a54d5284f98283eee1630f50
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level-GB.unity
     guid: 9a1eb87a63046994e8f00c14c8870ff1
   - enabled: 1
-    path: Assets/Scenes/EndMenu.unity
+    path: Assets/Scenes/Level-GB 1.unity
+    guid: 5e84b53d46534de46b883b26cdc912ff
+  - enabled: 1
+    path: Assets/Scenes/EndMenuLoss.unity
+    guid: 514157bcf3f363448bf2cd2b1a3225f0
+  - enabled: 1
+    path: Assets/Scenes/EndMenuWin.unity
     guid: 2dbe2c919d5e0dc4fa294cfd5ba4d8b4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
