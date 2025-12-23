@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
         // checks for win condition in Drop Off point
         if (CheckForWinCon())
         {
-            StartCoroutine(EndSequenceDelay(7, 1));
+            StartCoroutine(EndSequenceDelay(1, 1));
         }
     }
     bool CheckForLossCon()
