@@ -41,14 +41,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Canvas_Strength: 0.08
-    - _Canvas_Tiling: 10.06
-    - _Color_Steps: 316.38
-    - _Edge_Strength: 6.91
+    - _Canvas_Strength: 0.06
+    - _Canvas_Tiling: 0.21
+    - _Color_Steps: 100.6
+    - _Edge_Strength: 645.6
     - _Fullscreen_DepthWrite: 0
-    - _Secondary_Noise_Amp: 0.2
-    - _Stroke_Scale: 1.03
-    - _Stroke_Strength: 0.143
+    - _Secondary_Noise_Amp: 2.54
+    - _Stroke_Scale: 1
+    - _Stroke_Strength: 0.15
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
