@@ -23,12 +23,20 @@ public class Dragon : MonoBehaviour
     [Tooltip("The amount of time in seconds that the player has spent in the dragon's zone")]
     float secondsInZone = 0;
 
+    [SerializeField]
+    GameObject SleepingDragon;
+    [SerializeField]
+    GameObject AwakeDragon;
+
     int playersInArea;
     public bool asleep = true;
+
 
     // Update is called once per frame
     void Update()
     {
+        MeshSwap(asleep);
+
         if (asleep)
         {
             if (stackPlayerTime)
@@ -75,7 +83,20 @@ public class Dragon : MonoBehaviour
     }
 
 
-
+    void MeshSwap(bool asleep)
+    {
+        switch (asleep)
+        {
+            case true:
+                SleepingDragon.SetActive(true);
+                AwakeDragon.SetActive(false);
+                break;
+            case false:
+                SleepingDragon.SetActive(false);
+                AwakeDragon.SetActive(true);
+                break;
+        }
+    }
 
     void DragonWake()
     {
