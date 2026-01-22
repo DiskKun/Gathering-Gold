@@ -18,6 +18,7 @@ public class PlayerControls : MonoBehaviour
     public CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    public AnimationControlss animScript;
 
     [Header("Input Actions")]
     public InputActionReference moveAction;
@@ -93,7 +94,6 @@ public class PlayerControls : MonoBehaviour
             direction = moveAction.action.ReadValue<Vector2>();
         }
 
-
         return direction;
 
     }
@@ -145,24 +145,32 @@ public class PlayerControls : MonoBehaviour
 
         if (groundedPlayer)
         {
+            animScript.IsGrounded = true;
             // Slight downward velocity to keep grounded stable
             if (playerVelocity.y < -2f)
                 playerVelocity.y = -2f;
-        }
+        } else
+            animScript.IsGrounded = false;
 
-        // Read input
-        Vector2 input = DirectionInput();
+            // Read input
+            Vector2 input = DirectionInput();
 
         Vector3 move = new Vector3(input.x, 0, input.y);
         move = Vector3.ClampMagnitude(move, 1f);
 
         if (move != Vector3.zero)
+        {
             transform.forward = move;
-
+            animScript.IsWalking = true;
+        } else
+        {
+            animScript.IsWalking = false;
+        }
         // Jump using WasPressedThisFrame()
         if (groundedPlayer && JumpInput())
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravityValue);
+            animScript.ani.SetTrigger("Jump");
         }
 
         // Apply gravity
@@ -178,6 +186,7 @@ public class PlayerControls : MonoBehaviour
         {
             if (heldHeavyItemQueue)
             {
+                animScript.ani.SetTrigger("PickUp");
                 Debug.Log("heavy item q");
                 heldHeavyItemRB = heldHeavyItemQueue; // if there's an item in the queue, transfer it to the heldItemRB.
                 heldHeavyItemQueue = null; // clear the queue
@@ -185,6 +194,7 @@ public class PlayerControls : MonoBehaviour
             }
             else if(heldHeavyItemRB)
             {
+                animScript.ani.SetTrigger("PutDown");
                 heldHeavyItemRB = null; // drop the item if nothing in queue
                 dropForBothPlayers = true;
                 jumpHeight = 1.5f; // reset the player's jump height to normal
@@ -192,12 +202,14 @@ public class PlayerControls : MonoBehaviour
 
             if (heldItemQueue)
             {
+                animScript.ani.SetTrigger("PickUp");
                 heldItemRB = heldItemQueue; // if there's an item in the queue, transfer it to the heldItemRB.
                 heldItemQueue = null; // clear the queue
                 jumpHeight = 0.75f; // halve the player's jumpheight
             }
             else
             {
+                animScript.ani.SetTrigger("PutDown");
                 heldItemRB = null; // drop the item if nothing in queue
                 jumpHeight = 1.5f; // reset the player's jump height to normal
             }
